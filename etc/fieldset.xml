@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+Copyright © 2017 EaDesign by Eco Active S.R.L. All rights reserved.
+See LICENSE for license details.
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:DataObject/etc/fieldset.xsd">
+    <scope id="global">
+        <fieldset id="status_company">
+            <field name="with_company">
+                <aspect name="to_order_address" />
+                <aspect name="to_customer_address" />
+            </field>
+            <field name="yes_company">
+                <aspect name="to_order_address" />
+                <aspect name="to_customer_address" />
+            </field>
+        </fieldset>
+    </scope>
+</config>
