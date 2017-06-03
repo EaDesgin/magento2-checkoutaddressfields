@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+Copyright © 2017 EaDesign by Eco Active S.R.L. All rights reserved.
+See LICENSE for license details.
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Api/etc/extension_attributes.xsd">
+    <extension_attributes for="Magento\Quote\Api\Data\AddressInterface">
+        <attribute code="with_company" type="string" />
+        <attribute code="delivery-date" type="string" />
+    </extension_attributes>
+</config>
