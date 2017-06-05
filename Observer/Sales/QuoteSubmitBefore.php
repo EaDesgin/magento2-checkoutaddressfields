@@ -14,12 +14,6 @@ use Psr\Log\LoggerInterface;
 
 class QuoteSubmitBefore implements ObserverInterface
 {
-
-    /**
-     * @var Data
-     */
-    private $helper;
-
     /**
      * @var LoggerInterface
      */
@@ -34,16 +28,13 @@ class QuoteSubmitBefore implements ObserverInterface
      * QuoteSubmitBefore constructor.
      * @param QuoteRepository $quoteRepository
      * @param LoggerInterface $logger
-     * @param Data $helper
      */
     public function __construct(
         QuoteRepository $quoteRepository,
-        LoggerInterface $logger,
-        Data $helper
+        LoggerInterface $logger
     ) {
         $this->quoteRepository = $quoteRepository;
         $this->logger = $logger;
-        $this->helper = $helper;
     }
 
     /**

@@ -15,10 +15,10 @@ use Magento\Quote\Api\Data\AddressInterface;
 use Magento\Quote\Model\ShippingAddressManagement;
 
 /**
- * Class ShippingAddressManagementPlugin
+ * Class BillingAddressManagement
  * @package Eadesigndev\Checkoutaddressfields\Plugin\Magento\Quote\Model
  */
-class ShippingAddressManagementPlugin
+class BillingAddressManagementPlugin
 {
 
     /**

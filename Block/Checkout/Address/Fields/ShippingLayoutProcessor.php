@@ -38,8 +38,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $result = $this->filedWithCompany($result, 'with_company');
-//        $result = $this->fieldCompany($result, 'company');
-//        $result = $this->fieldDeliveryDate($result, 'delivery_date');
+        $result = $this->fieldDeliveryDate($result, 'delivery_date');
 
         return $result;
     }
@@ -99,34 +98,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         ['children']
         ['shipping-address-fieldset']
         ['children']
-        ['test'] = $withCompany;
-
-        return $result;
-    }
-
-    /**
-     * Changed the order, for company
-     * @param $result
-     * @param $fieldName
-     * @return mixed
-     */
-    public function fieldCompany($result, $fieldName)
-    {
-        $company = ['sortOrder' => 1, 'hidden' => false];
-
-        $result
-        ['components']
-        ['checkout']
-        ['children']
-        ['steps']
-        ['children']
-        ['shipping-step']
-        ['children']
-        ['shippingAddress']
-        ['children']
-        ['shipping-address-fieldset']
-        ['children']
-        [$fieldName] = $company;
+        ['replacement_with_company'] = $withCompany;
 
         return $result;
     }

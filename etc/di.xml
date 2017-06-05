@@ -12,4 +12,10 @@ See LICENSE for license details.
                 sortOrder="10"
         />
     </type>
+    <type name="Magento\Quote\Model\BillingAddressManagement">
+        <plugin name="Eadesigndev_Checkoutaddressfields_Magento_Quote_Model_BillingAddressManagement"
+                type="Eadesigndev\Checkoutaddressfields\Plugin\Magento\Quote\Model\BillingAddressManagementPlugin"
+                sortOrder="10"
+                disabled="false" />
+    </type>
 </config>
