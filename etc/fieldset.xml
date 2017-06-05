@@ -11,10 +11,6 @@ See LICENSE for license details.
                 <aspect name="to_order_address" />
                 <aspect name="to_customer_address" />
             </field>
-            <field name="yes_company">
-                <aspect name="to_order_address" />
-                <aspect name="to_customer_address" />
-            </field>
         </fieldset>
     </scope>
 </config>
