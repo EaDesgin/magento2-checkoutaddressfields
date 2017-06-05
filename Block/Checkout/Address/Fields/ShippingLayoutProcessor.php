@@ -10,10 +10,10 @@ use Magento\Checkout\Block\Checkout\LayoutProcessorInterface;
 use Magento\Framework\DataObject\Copy\Config as CopyConfig;
 
 /**
- * Class BillingLayoutProcessor add the fields to checkout billing address
+ * Class ShippingLayoutProcessor add the fields to checkout billing address
  * @package Eadesigndev\Checkoutaddressfields\Block\Checkout\Address\Fields
  */
-class BillingLayoutProcessor implements LayoutProcessorInterface
+class ShippingLayoutProcessor implements LayoutProcessorInterface
 {
     /**
      * @var CopyConfig
@@ -38,7 +38,6 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $result = $this->filedWithCompany($result, 'with_company');
-        $result = $this->fieldCompany($result, 'company');
         $result = $this->fieldDeliveryDate($result, 'delivery_date');
 
         return $result;
@@ -56,15 +55,15 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
         $withCompany = [
             'component' => 'Magento_Ui/js/form/element/abstract',
             'config' => [
-                'customScope' => 'billingAddress.custom_attributes',
+                'customScope' => 'shippingAddress.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
-                'elementTmpl' => 'ui/form/element/input',
+                'elementTmpl' => 'ui/form/element/checkbox-set',
                 'tooltip' => [
                     'description' => 'Company',
                 ],
             ],
-            'dataScope' => 'billingAddress.custom_attributes' . '.' . $fieldName,
+            'dataScope' => 'shippingAddress.custom_attributes' .'.'. $fieldName,
             'label' => null,
             'provider' => 'checkoutProvider',
             'sortOrder' => 0,
@@ -93,40 +92,13 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
         ['children']
         ['steps']
         ['children']
-        ['billing-step']
+        ['shipping-step']
         ['children']
-        ['billingAddress']
+        ['shippingAddress']
         ['children']
-        ['billing-address-fieldset']
+        ['shipping-address-fieldset']
         ['children']
-        [$fieldName] = $withCompany;
-
-        return $result;
-    }
-
-    /**
-     * Changed the order, for company
-     * @param $result
-     * @param $fieldName
-     * @return mixed
-     */
-    public function fieldCompany($result, $fieldName)
-    {
-        $company = ['sortOrder' => 1, 'hidden' => false];
-
-        $result
-        ['components']
-        ['checkout']
-        ['children']
-        ['steps']
-        ['children']
-        ['billing-step']
-        ['children']
-        ['billingAddress']
-        ['children']
-        ['billing-address-fieldset']
-        ['children']
-        [$fieldName] = $company;
+        ['replacement_with_company'] = $withCompany;
 
         return $result;
     }
@@ -142,13 +114,13 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
         $deliveryDate = [
             'component' => 'Magento_Ui/js/form/element/abstract',
             'config' => [
-                'customScope' => 'billingAddress',
+                'customScope' => 'shippingAddress',
                 'template' => 'ui/form/field',
                 'elementTmpl' => 'ui/form/element/date',
                 'options' => [],
                 'id' => $fieldName
             ],
-            'dataScope' => 'billingAddress.' . $fieldName,
+            'dataScope' => 'shippingAddress.' . $fieldName,
             'label' => 'Delivery Date',
             'provider' => 'checkoutProvider',
             'visible' => true,
@@ -163,11 +135,11 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
         ['children']
         ['steps']
         ['children']
-        ['billing-step']
+        ['shipping-step']
         ['children']
-        ['billingAddress']
+        ['shippingAddress']
         ['children']
-        ['billing-address-fieldset']
+        ['shipping-address-fieldset']
         ['children']
         [$fieldName] = $deliveryDate;
 
