@@ -38,6 +38,7 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $result = $this->filedWithCompany($result, 'with_company');
+        $result = $this->filedWithBank($result, 'bank_name');
         $result = $this->fieldCompany($result, 'company');
         $result = $this->fieldDeliveryDate($result, 'delivery_date');
 
@@ -103,6 +104,51 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
 
         return $result;
     }
+
+    /**
+     * Select company or person
+     * @param $result
+     * @param $fieldName
+     * @return mixed
+     */
+    public function filedWithBank($result, $fieldName)
+    {
+
+        $withCompany = [
+            'component' => 'Magento_Ui/js/form/element/abstract',
+            'config' => [
+                'customScope' => 'billingAddress.custom_attributes',
+                'customEntry' => null,
+                'template' => 'ui/form/field',
+                'elementTmpl' => 'ui/form/element/input'
+            ],
+            'dataScope' => 'billingAddress.custom_attributes.' . $fieldName,
+            'label' => __('Bank'),
+            'provider' => 'checkoutProvider',
+            'sortOrder' => 5,
+            'validation' => [],
+            'filterBy' => null,
+            'customEntry' => null,
+            'visible' => true,
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['billing-step']
+        ['children']
+        ['billingAddress']
+        ['children']
+        ['billing-address-fieldset']
+        ['children']
+        [$fieldName] = $withCompany;
+
+        return $result;
+    }
+
 
     /**
      * Changed the order, for company

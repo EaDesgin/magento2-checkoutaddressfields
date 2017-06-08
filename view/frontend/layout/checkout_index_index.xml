@@ -26,6 +26,9 @@
                                                                 <item name="company" xsi:type="array">
                                                                     <item name="sortOrder" xsi:type="string">1</item>
                                                                 </item>
+                                                                <item name="vat_id" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="string">2</item>
+                                                                </item>
                                                             </item>
                                                         </item>
                                                     </item>

@@ -35,8 +35,10 @@ class ShippingAddressManagementPlugin
         $extAttributes = $address->getExtensionAttributes();
         if ($extAttributes) {
             try {
-                $field = $extAttributes->getWithCompany();
-                $address->setWithCompany($field);
+                $withCompany = $extAttributes->getWithCompany();
+                $address->setWithCompany($withCompany);
+                $bankName = $extAttributes->getBankName();
+                $address->setBankName($bankName);
             } catch (\Exception $e) {
                 throw new CouldNotSaveException(
                     __('One custom field could not be added to the address.'),
