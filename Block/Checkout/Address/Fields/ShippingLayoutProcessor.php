@@ -38,6 +38,8 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $result = $this->filedWithCompany($result, 'with_company');
+        $result = $this->filedWithBank($result, 'bank_name');
+        $result = $this->filedWithBankAccount($result, 'bank_account');
         $result = $this->fieldDeliveryDate($result, 'delivery_date');
 
         return $result;
@@ -63,7 +65,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
                     'description' => 'Company',
                 ],
             ],
-            'dataScope' => 'shippingAddress.custom_attributes' .'.'. $fieldName,
+            'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
             'label' => null,
             'provider' => 'checkoutProvider',
             'sortOrder' => 0,
@@ -80,10 +82,10 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
                     'label' => 'Business',
                 ]
             ],
-            'selected' => 1,
             'filterBy' => null,
             'customEntry' => null,
             'visible' => true,
+            'id' => $fieldName
         ];
 
         $result
@@ -104,6 +106,95 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     }
 
     /**
+     * Select company or person
+     * @param $result
+     * @param $fieldName
+     * @return mixed
+     */
+    public function filedWithBank($result, $fieldName)
+    {
+
+        $withCompany = [
+            'component' => 'Magento_Ui/js/form/element/abstract',
+            'config' => [
+                'customScope' => 'shippingAddress.custom_attributes',
+                'customEntry' => null,
+                'template' => 'ui/form/field',
+                'elementTmpl' => 'ui/form/element/input'
+            ],
+            'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
+            'label' => __('Bank'),
+            'provider' => 'checkoutProvider',
+            'sortOrder' => 5,
+            'validation' => [],
+            'filterBy' => null,
+            'customEntry' => null,
+            'visible' => true,
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['shipping-step']
+        ['children']
+        ['shippingAddress']
+        ['children']
+        ['shipping-address-fieldset']
+        ['children']
+        [$fieldName] = $withCompany;
+
+        return $result;
+    }
+
+    /**
+     * Select company or person
+     * @param $result
+     * @param $fieldName
+     * @return mixed
+     */
+    public function filedWithBankAccount($result, $fieldName)
+    {
+
+        $withCompany = [
+            'component' => 'Magento_Ui/js/form/element/abstract',
+            'config' => [
+                'customScope' => 'shippingAddress.custom_attributes',
+                'customEntry' => null,
+                'template' => 'ui/form/field',
+                'elementTmpl' => 'ui/form/element/input'
+            ],
+            'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
+            'label' => __('Bank Account'),
+            'provider' => 'checkoutProvider',
+            'sortOrder' => 6,
+            'validation' => [],
+            'filterBy' => null,
+            'customEntry' => null,
+            'visible' => true,
+            'id'=>$fieldName
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['shipping-step']
+        ['children']
+        ['shippingAddress']
+        ['children']
+        ['shipping-address-fieldset']
+        ['children']
+        [$fieldName] = $withCompany;
+
+        return $result;
+    }
+
+    /**
      * Adding delivery date to the checkout
      * @param $result
      * @param $fieldName
@@ -114,18 +205,20 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         $deliveryDate = [
             'component' => 'Magento_Ui/js/form/element/abstract',
             'config' => [
-                'customScope' => 'shippingAddress',
+                'customScope' => 'shippingAddress.custom_attributes',
                 'template' => 'ui/form/field',
                 'elementTmpl' => 'ui/form/element/date',
                 'options' => [],
                 'id' => $fieldName
             ],
-            'dataScope' => 'shippingAddress.' . $fieldName,
+            'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
             'label' => 'Delivery Date',
             'provider' => 'checkoutProvider',
             'visible' => true,
-            'validation' => [],
-            'sortOrder' => 3,
+            'validation' => [
+                'required-entry' => true
+            ],
+            'sortOrder' => 5,
             'id' => $fieldName
         ];
 

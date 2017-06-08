@@ -54,6 +54,7 @@ class QuoteSubmitBefore implements ObserverInterface
 
         try {
             $order->getBillingAddress()->setWithCompany($quote->getBillingAddress()->getWithCompany())->save();
+            $order->getBillingAddress()->setBankName($quote->getBillingAddress()->getBankName())->save();
         } catch (\Exception $e) {
             $this->logger->critical($e->getMessage());
         }
