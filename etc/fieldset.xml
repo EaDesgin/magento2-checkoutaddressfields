@@ -11,6 +11,10 @@ See LICENSE for license details.
                 <aspect name="to_order_address" />
                 <aspect name="to_customer_address" />
             </field>
+            <field name="registry_commerce">
+                <aspect name="to_order_address" />
+                <aspect name="delivery_date" />
+            </field>
             <field name="bank_name">
                 <aspect name="to_order_address" />
                 <aspect name="to_customer_address" />
@@ -18,14 +22,6 @@ See LICENSE for license details.
             <field name="bank_account">
                 <aspect name="to_order_address" />
                 <aspect name="to_customer_address" />
-            </field>
-            <field name="bank_account">
-                <aspect name="to_order_address" />
-                <aspect name="delivery_date" />
-            </field>
-            <field name="registry_commerce">
-                <aspect name="to_order_address" />
-                <aspect name="delivery_date" />
             </field>
         </fieldset>
     </scope>

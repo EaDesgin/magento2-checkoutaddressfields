@@ -45,8 +45,6 @@ define(
 
                 var result = true;
 
-                console.log(payload);
-
                 $.ajax({
                     url: urlFormatter.build(url),
                     data: JSON.stringify(payload),

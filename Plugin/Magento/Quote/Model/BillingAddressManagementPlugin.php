@@ -35,8 +35,14 @@ class BillingAddressManagementPlugin
         $extAttributes = $address->getExtensionAttributes();
         if ($extAttributes) {
             try {
-                $field = $extAttributes->getWithCompany();
-                $address->setWithCompany($field);
+                $withCompany = $extAttributes->getWithCompany();
+                $address->setWithCompany($withCompany);
+                $registryCommerce = $extAttributes->getRegistryCommerce();
+                $address->setRegistryCommerce($registryCommerce);
+                $bankName = $extAttributes->getBankName();
+                $address->setBankName($bankName);
+                $bankAccount = $extAttributes->getBankAccount();
+                $address->setBankAccount($bankAccount);
             } catch (\Exception $e) {
                 throw new CouldNotSaveException(
                     __('One custom field could not be added to the address.'),

@@ -113,7 +113,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     }
 
     /**
-     * Select company or person
+     * Registry of commerce
      * @param $result
      * @param $fieldName
      * @return mixed

@@ -38,8 +38,9 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $result = $this->filedWithCompany($result, 'with_company');
+        $result = $this->filedWithRegistryCommerce($result, 'registry_commerce');
         $result = $this->filedWithBank($result, 'bank_name');
-        $result = $this->fieldCompany($result, 'company');
+        $result = $this->filedWithBankAccount($result, 'bank_account');
         $result = $this->fieldDeliveryDate($result, 'delivery_date');
 
         return $result;
@@ -60,12 +61,12 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
                 'customScope' => 'billingAddress.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
-                'elementTmpl' => 'ui/form/element/input',
+                'elementTmpl' => 'ui/form/element/checkbox-set',
                 'tooltip' => [
                     'description' => 'Company',
                 ],
             ],
-            'dataScope' => 'billingAddress.custom_attributes' . '.' . $fieldName,
+            'dataScope' => 'billingAddress.custom_attributes.' . $fieldName,
             'label' => null,
             'provider' => 'checkoutProvider',
             'sortOrder' => 0,
@@ -82,10 +83,10 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
                     'label' => 'Business',
                 ]
             ],
-            'selected' => 1,
             'filterBy' => null,
             'customEntry' => null,
             'visible' => true,
+            'id' => $fieldName
         ];
 
         $result
@@ -100,7 +101,52 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
         ['children']
         ['billing-address-fieldset']
         ['children']
-        [$fieldName] = $withCompany;
+        ['replacement_with_company'] = $withCompany;
+
+        return $result;
+    }
+
+    /**
+     * Registry of commerce
+     * @param $result
+     * @param $fieldName
+     * @return mixed
+     */
+    public function filedWithRegistryCommerce($result, $fieldName)
+    {
+
+        $withCompany = [
+            'component' => 'Magento_Ui/js/form/element/abstract',
+            'config' => [
+                'customScope' => 'billingAddress.custom_attributes',
+                'customEntry' => null,
+                'template' => 'ui/form/field',
+                'elementTmpl' => 'ui/form/element/input'
+            ],
+            'dataScope' => 'billingAddress.custom_attributes.' . $fieldName,
+            'label' => __('Registry of commerce'),
+            'provider' => 'checkoutProvider',
+            'sortOrder' => 5,
+            'validation' => [],
+            'filterBy' => null,
+            'customEntry' => null,
+            'visible' => true,
+            'id' => $fieldName
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['billing-step']
+        ['children']
+        ['billingAddress']
+        ['children']
+        ['billing-address-fieldset']
+        ['children']
+        ['replacement_' . $fieldName] = $withCompany;
 
         return $result;
     }
@@ -130,6 +176,7 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
             'filterBy' => null,
             'customEntry' => null,
             'visible' => true,
+            'id' => $fieldName
         ];
 
         $result
@@ -144,21 +191,38 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
         ['children']
         ['billing-address-fieldset']
         ['children']
-        [$fieldName] = $withCompany;
+        ['replacement_' . $fieldName] = $withCompany;
 
         return $result;
     }
 
-
     /**
-     * Changed the order, for company
+     * Select company or person
      * @param $result
      * @param $fieldName
      * @return mixed
      */
-    public function fieldCompany($result, $fieldName)
+    public function filedWithBankAccount($result, $fieldName)
     {
-        $company = ['sortOrder' => 1, 'hidden' => false];
+
+        $withCompany = [
+            'component' => 'Magento_Ui/js/form/element/abstract',
+            'config' => [
+                'customScope' => 'billingAddress.custom_attributes',
+                'customEntry' => null,
+                'template' => 'ui/form/field',
+                'elementTmpl' => 'ui/form/element/input'
+            ],
+            'dataScope' => 'billingAddress.custom_attributes.' . $fieldName,
+            'label' => __('Bank Account'),
+            'provider' => 'checkoutProvider',
+            'sortOrder' => 6,
+            'validation' => [],
+            'filterBy' => null,
+            'customEntry' => null,
+            'visible' => true,
+            'id'=>$fieldName
+        ];
 
         $result
         ['components']
@@ -172,7 +236,7 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
         ['children']
         ['billing-address-fieldset']
         ['children']
-        [$fieldName] = $company;
+        ['replacement_' . $fieldName] = $withCompany;
 
         return $result;
     }
@@ -198,8 +262,10 @@ class BillingLayoutProcessor implements LayoutProcessorInterface
             'label' => 'Delivery Date',
             'provider' => 'checkoutProvider',
             'visible' => true,
-            'validation' => [],
-            'sortOrder' => 3,
+            'validation' => [
+                'required-entry' => true
+            ],
+            'sortOrder' => 5,
             'id' => $fieldName
         ];
 
