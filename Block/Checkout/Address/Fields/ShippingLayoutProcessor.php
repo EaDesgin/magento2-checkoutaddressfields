@@ -15,6 +15,12 @@ use Magento\Framework\DataObject\Copy\Config as CopyConfig;
  */
 class ShippingLayoutProcessor implements LayoutProcessorInterface
 {
+    const WITH_COMPANY = 'with_company';
+    const REGISTRY_COMMERCE = 'registry_commerce';
+    const BANK_NAME = 'bank_name';
+    const BANK_ACCOUNT = 'bank_account';
+    const DELIVERY_DATE = 'delivery_date';
+
     /**
      * @var CopyConfig
      */
@@ -38,6 +44,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $result = $this->filedWithCompany($result, 'with_company');
+        $result = $this->filedWithRegistryCommerce($result, 'registry_commerce');
         $result = $this->filedWithBank($result, 'bank_name');
         $result = $this->filedWithBankAccount($result, 'bank_account');
         $result = $this->fieldDeliveryDate($result, 'delivery_date');
@@ -111,6 +118,51 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
      * @param $fieldName
      * @return mixed
      */
+    public function filedWithRegistryCommerce($result, $fieldName)
+    {
+
+        $withCompany = [
+            'component' => 'Magento_Ui/js/form/element/abstract',
+            'config' => [
+                'customScope' => 'shippingAddress.custom_attributes',
+                'customEntry' => null,
+                'template' => 'ui/form/field',
+                'elementTmpl' => 'ui/form/element/input'
+            ],
+            'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
+            'label' => __('Registry of commerce'),
+            'provider' => 'checkoutProvider',
+            'sortOrder' => 5,
+            'validation' => [],
+            'filterBy' => null,
+            'customEntry' => null,
+            'visible' => true,
+            'id' => $fieldName
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['shipping-step']
+        ['children']
+        ['shippingAddress']
+        ['children']
+        ['shipping-address-fieldset']
+        ['children']
+        ['replacement_' . $fieldName] = $withCompany;
+
+        return $result;
+    }
+
+    /**
+     * Select company or person
+     * @param $result
+     * @param $fieldName
+     * @return mixed
+     */
     public function filedWithBank($result, $fieldName)
     {
 
@@ -130,6 +182,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
             'filterBy' => null,
             'customEntry' => null,
             'visible' => true,
+            'id' => $fieldName
         ];
 
         $result
@@ -144,7 +197,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         ['children']
         ['shipping-address-fieldset']
         ['children']
-        [$fieldName] = $withCompany;
+        ['replacement_' . $fieldName] = $withCompany;
 
         return $result;
     }
@@ -189,7 +242,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         ['children']
         ['shipping-address-fieldset']
         ['children']
-        [$fieldName] = $withCompany;
+        ['replacement_' . $fieldName] = $withCompany;
 
         return $result;
     }
@@ -205,13 +258,13 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         $deliveryDate = [
             'component' => 'Magento_Ui/js/form/element/abstract',
             'config' => [
-                'customScope' => 'shippingAddress.custom_attributes',
+                'customScope' => 'shippingAddress',
                 'template' => 'ui/form/field',
                 'elementTmpl' => 'ui/form/element/date',
                 'options' => [],
                 'id' => $fieldName
             ],
-            'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
+            'dataScope' => 'shippingAddress.' . $fieldName,
             'label' => 'Delivery Date',
             'provider' => 'checkoutProvider',
             'visible' => true,

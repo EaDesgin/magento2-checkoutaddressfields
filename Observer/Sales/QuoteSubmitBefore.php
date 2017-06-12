@@ -6,6 +6,8 @@
 
 namespace Eadesigndev\Checkoutaddressfields\Observer\Sales;
 
+use Eadesigndev\Checkoutaddressfields\Block\Checkout\Address\Fields\ShippingLayoutProcessor;
+use Eadesigndev\Checkoutaddressfields\Model\Data\OrderFields;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Model\QuoteRepository;
@@ -53,16 +55,80 @@ class QuoteSubmitBefore implements ObserverInterface
         $quote = $this->quoteRepository->get($order->getQuoteId());
 
         try {
-            $order->getBillingAddress()->setWithCompany($quote->getBillingAddress()->getWithCompany())->save();
-            $order->getBillingAddress()->setBankName($quote->getBillingAddress()->getBankName())->save();
-        } catch (\Exception $e) {
-            $this->logger->critical($e->getMessage());
-        }
+            $this->orderBillingAddressFields($order, $quote);
 
-        try {
-            $order->getShippingAddress()->setWithCompany($quote->getShippingAddress()->getWithCompany())->save();
+            $this->orderShippingAddressFields($order, $quote);
+
+            $order->setData(
+                ShippingLayoutProcessor::DELIVERY_DATE,
+                $quote->getShippingAddress()->getData(ShippingLayoutProcessor::DELIVERY_DATE)
+            );
+            $order->setData(
+                OrderFields::COMMENT_FIELD_NAME,
+                $quote->getData(OrderFields::COMMENT_FIELD_NAME)
+            );
         } catch (\Exception $e) {
             $this->logger->critical($e->getMessage());
         }
+    }
+
+    /**
+     * @param $order
+     * @param $quote
+     * @return $this
+     */
+    private function orderBillingAddressFields($order, $quote)
+    {
+        $order->getBillingAddress()->setData(
+            ShippingLayoutProcessor::WITH_COMPANY,
+            $quote->getBillingAddress()->getData(ShippingLayoutProcessor::WITH_COMPANY)
+        );
+
+        $order->getBillingAddress()->setData(
+            ShippingLayoutProcessor::REGISTRY_COMMERCE,
+            $quote->getBillingAddress()->getData(ShippingLayoutProcessor::REGISTRY_COMMERCE)
+        );
+
+        $order->getBillingAddress()->setData(
+            ShippingLayoutProcessor::BANK_NAME,
+            $quote->getBillingAddress()->getData(ShippingLayoutProcessor::BANK_NAME)
+        );
+
+        $order->getBillingAddress()->setData(
+            ShippingLayoutProcessor::BANK_ACCOUNT,
+            $quote->getBillingAddress()->getData(ShippingLayoutProcessor::BANK_ACCOUNT)
+        )->save();
+
+        return $this;
+    }
+
+    /**
+     * @param $order
+     * @param $quote
+     * @return $this
+     */
+    private function orderShippingAddressFields($order, $quote)
+    {
+        $order->getShippingAddress()->setData(
+            ShippingLayoutProcessor::WITH_COMPANY,
+            $quote->getShippingAddress()->getData(ShippingLayoutProcessor::WITH_COMPANY)
+        );
+
+        $order->getShippingAddress()->setData(
+            ShippingLayoutProcessor::REGISTRY_COMMERCE,
+            $quote->getShippingAddress()->getData(ShippingLayoutProcessor::REGISTRY_COMMERCE)
+        );
+
+        $order->getShippingAddress()->setData(
+            ShippingLayoutProcessor::BANK_NAME,
+            $quote->getShippingAddress()->getData(ShippingLayoutProcessor::BANK_NAME)
+        );
+
+        $order->getShippingAddress()->setData(
+            ShippingLayoutProcessor::BANK_ACCOUNT,
+            $quote->getShippingAddress()->getData(ShippingLayoutProcessor::BANK_ACCOUNT)
+        )->save();
+
+        return $this;
     }
 }

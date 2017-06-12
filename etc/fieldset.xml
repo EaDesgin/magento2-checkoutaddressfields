@@ -23,6 +23,10 @@ See LICENSE for license details.
                 <aspect name="to_order_address" />
                 <aspect name="delivery_date" />
             </field>
+            <field name="registry_commerce">
+                <aspect name="to_order_address" />
+                <aspect name="delivery_date" />
+            </field>
         </fieldset>
     </scope>
 </config>
