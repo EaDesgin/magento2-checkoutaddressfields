@@ -5,6 +5,15 @@ See LICENSE for license details.
 -->
 
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Eadesigndev\Checkoutaddressfields\Api\Data\OrderFieldsInterface"
+                type="Eadesigndev\Checkoutaddressfields\Model\Data\OrderFields" />
+
+    <preference for="Eadesigndev\Checkoutaddressfields\Api\OrderFieldsManagementInterface"
+                type="Eadesigndev\Checkoutaddressfields\Model\OrderFieldsManagement" />
+
+    <preference for="Eadesigndev\Checkoutaddressfields\Api\GuestOrderFieldsManagementInterface"
+                type="Eadesigndev\Checkoutaddressfields\Model\GuestOrderFieldsManagement" />
+
     <type name="Magento\Quote\Model\ShippingAddressManagement">
         <plugin name="Eadesigndev_Checkoutaddressfields_Magento_Quote_Model_ShippingAddressManagement"
                 type="Eadesigndev\Checkoutaddressfields\Plugin\Magento\Quote\Model\ShippingAddressManagementPlugin"
@@ -12,6 +21,7 @@ See LICENSE for license details.
                 sortOrder="10"
         />
     </type>
+
     <type name="Magento\Quote\Model\BillingAddressManagement">
         <plugin name="Eadesigndev_Checkoutaddressfields_Magento_Quote_Model_BillingAddressManagement"
                 type="Eadesigndev\Checkoutaddressfields\Plugin\Magento\Quote\Model\BillingAddressManagementPlugin"

@@ -19,7 +19,9 @@ define(
              */
             validate: function () {
                 var isCustomer = customer.isLoggedIn();
-                var form = $('.payment-method input[name="payment[method]"]:checked').parents('.payment-method').find('form.order-comment-form');
+                var form = $('.payment-method input[name="payment[method]"]:checked')
+                    .parents('.payment-method')
+                    .find('form.order-comment-form');
 
                 var quoteId = quote.getQuoteId();
                 var url;
@@ -42,6 +44,8 @@ define(
                 }
 
                 var result = true;
+
+                console.log(payload);
 
                 $.ajax({
                     url: urlFormatter.build(url),
