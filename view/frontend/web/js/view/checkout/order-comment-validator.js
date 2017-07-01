@@ -8,7 +8,6 @@ define(
         'use strict';
 
         additionalValidators.registerValidator(commentValidator);
-
         return Component.extend({});
     }
 );

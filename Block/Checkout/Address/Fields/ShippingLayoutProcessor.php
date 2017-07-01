@@ -48,6 +48,9 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         $result = $this->filedWithBank($result, 'bank_name');
         $result = $this->filedWithBankAccount($result, 'bank_account');
         $result = $this->fieldDeliveryDate($result, 'delivery_date');
+        $result = $this->fieldRegionId($result, 'region_id');
+
+
 
         return $result;
     }
@@ -273,6 +276,44 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
             ],
             'sortOrder' => 5,
             'id' => $fieldName
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['shipping-step']
+        ['children']
+        ['shippingAddress']
+        ['children']
+        ['shipping-address-fieldset']
+        ['children']
+        [$fieldName] = $deliveryDate;
+
+        return $result;
+    }
+
+    /**
+     * Adding delivery date to the checkout
+     * @param $result
+     * @param $fieldName
+     * @return mixed
+     */
+    public function fieldRegionId($result, $fieldName)
+    {
+        $deliveryDate = [
+            'component' => 'Magento_Ui/js/form/element/region',
+            'config' => [
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/region_id',
+                'template' => 'ui/form/field',
+                'customEntry' => 'shippingAddress.region',
+            ],
+            'filterBy'=>[
+                'target'=> '${ $.provider }:${ $.parentScope }.country_id',
+                'field' => 'country_id'
+            ],
         ];
 
         $result

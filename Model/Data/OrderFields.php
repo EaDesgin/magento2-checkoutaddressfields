@@ -12,7 +12,8 @@ use Magento\Framework\Api\AbstractSimpleObject;
 class OrderFields extends AbstractSimpleObject implements OrderFieldsInterface
 {
     const COMMENT_FIELD_NAME = 'order_comment';
-    
+    const DATE_FIELD_NAME = 'delivery_date';
+
     /**
      * @return string|null
      */
@@ -28,5 +29,22 @@ class OrderFields extends AbstractSimpleObject implements OrderFieldsInterface
     public function setComment($comment)
     {
         return $this->setData(self::COMMENT_FIELD_NAME, $comment);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getDate()
+    {
+        return $this->_get(self::DATE_FIELD_NAME);
+    }
+
+    /**
+     * @param string $comment
+     * @return $this
+     */
+    public function setDate($comment)
+    {
+        return $this->setData(self::DATE_FIELD_NAME, $comment);
     }
 }

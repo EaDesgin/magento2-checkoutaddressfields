@@ -1,7 +1,8 @@
 define([
     'jquery',
     'mage/utils/wrapper',
-    'Magento_Checkout/js/model/quote'
+    'Magento_Checkout/js/model/quote',
+    'Magento_Ui/js/form/element/abstract'
 ], function ($, wrapper,quote) {
     'use strict';
 

@@ -18,4 +18,15 @@ interface OrderFieldsInterface
      * @return null
      */
     public function setComment($comment);
+
+    /**
+     * @return string|null
+     */
+    public function getDate();
+
+    /**
+     * @param string $date
+     * @return null
+     */
+    public function setDate($date);
 }
