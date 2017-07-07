@@ -15,28 +15,13 @@
                                                     <item name="children" xsi:type="array">
                                                         <item name="shipping-address-fieldset" xsi:type="array">
                                                             <item name="children" xsi:type="array">
-                                                                <!--<item name="step-configuraion" xsi:type="array">-->
-                                                                    <!--<item name="children" xsi:type="array">-->
-                                                                        <!--<item name="shipping-rates-validation" xsi:type="array">-->
-                                                                            <!--<item name="children" xsi:type="array">-->
-                                                                                <!--<item name="shipping-step-validation" xsi:type="array">-->
-                                                                                    <!--<item name="component" xsi:type="string">Eadesigndev_Checkoutaddressfields/js/view/checkout/delivery-date-validator</item>-->
-                                                                                <!--</item>-->
-                                                                            <!--</item>-->
-                                                                        <!--</item>-->
-                                                                    <!--</item>-->
-                                                                <!--</item>-->
                                                                 <item name="with_company" xsi:type="array">
                                                                     <item name="visible" xsi:type="boolean">false</item>
                                                                     <item name="config" xsi:type="array">
-                                                                        <item name="elementTmpl" xsi:type="string">
-                                                                            ui/form/element/input
-                                                                        </item>
+                                                                        <item name="elementTmpl" xsi:type="string">ui/form/element/input</item>
                                                                     </item>
                                                                 </item>
-                                                                <item name="company" xsi:type="array">
-                                                                    <item name="sortOrder" xsi:type="string">1</item>
-                                                                </item>
+
                                                                 <item name="registry_commerce" xsi:type="array">
                                                                     <item name="visible" xsi:type="boolean">false</item>
                                                                 </item>
@@ -47,10 +32,18 @@
                                                                     <item name="visible" xsi:type="boolean">false</item>
                                                                 </item>
                                                                 <item name="vat_id" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input</item>
                                                                     <item name="sortOrder" xsi:type="string">2</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="elementTmpl" xsi:type="string">Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input</item>
+                                                                    </item>
                                                                 </item>
                                                                 <item name="company" xsi:type="array">
-                                                                    <item name="visible" xsi:type="boolean">true</item>
+                                                                    <item name="component" xsi:type="string">Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input</item>
+                                                                    <item name="sortOrder" xsi:type="string">4</item>
+                                                                    <item name="config" xsi:type="array">
+                                                                        <item name="elementTmpl" xsi:type="string">Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input</item>
+                                                                    </item>
                                                                 </item>
                                                                 <item name="city" xsi:type="array">
                                                                     <item name="component" xsi:type="string">Eadesigndev_Checkoutaddressfields/js/form/element/city</item>
@@ -63,11 +56,6 @@
                                                                         <item name="elementTmpl" xsi:type="string">Eadesigndev_Checkoutaddressfields/form/element/country</item>
                                                                     </item>
                                                                 </item>
-                                                                <!--<item name="region_id" xsi:type="array">-->
-                                                                    <!--<item name="config" xsi:type="array">-->
-                                                                        <!--<item name="elementTmpl" xsi:type="string">Eadesigndev_Checkoutaddressfields/form/element/region_id</item>-->
-                                                                    <!--</item>-->
-                                                                <!--</item>-->
                                                             </item>
                                                         </item>
                                                     </item>
