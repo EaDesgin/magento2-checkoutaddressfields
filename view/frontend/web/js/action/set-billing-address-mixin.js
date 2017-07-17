@@ -1,8 +1,7 @@
 define([
     'jquery',
     'mage/utils/wrapper',
-    'Magento_Checkout/js/model/quote',
-    'Magento_Ui/js/form/element/abstract'
+    'Magento_Checkout/js/model/quote'
 ], function ($, wrapper,quote) {
     'use strict';
 
@@ -17,6 +16,7 @@ define([
                     billingAddress['extension_attributes'] = {};
                 }
 
+                console.log(billingAddress.customAttributes);
                 if (billingAddress.customAttributes != undefined) {
                     $.each(billingAddress.customAttributes, function (key, value) {
 

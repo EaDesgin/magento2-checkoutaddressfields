@@ -6,13 +6,8 @@
 
 namespace Eadesigndev\Checkoutaddressfields\Plugin\Magento\Quote\Model;
 
-//use Magento\Checkout\Api\Data\ShippingInformationInterface;
-//use Magento\Checkout\Model\ShippingInformationManagement;
-//use Magento\Quote\Model\QuoteRepository;
-
 use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Quote\Api\Data\AddressInterface;
-use Magento\Quote\Model\ShippingAddressManagement;
+
 
 /**
  * Class BillingAddressManagement

@@ -6,13 +6,7 @@
 
 namespace Eadesigndev\Checkoutaddressfields\Plugin\Magento\Quote\Model;
 
-//use Magento\Checkout\Api\Data\ShippingInformationInterface;
-//use Magento\Checkout\Model\ShippingInformationManagement;
-//use Magento\Quote\Model\QuoteRepository;
-
 use Magento\Framework\Exception\CouldNotSaveException;
-use Magento\Quote\Api\Data\AddressInterface;
-use Magento\Quote\Model\ShippingAddressManagement;
 
 /**
  * Class ShippingAddressManagementPlugin
@@ -36,12 +30,19 @@ class ShippingAddressManagementPlugin
         if ($extAttributes) {
             try {
                 $withCompany = $extAttributes->getWithCompany();
+
+                $registryCommerce = '';
+                $bankName = '';
+                $bankAccount = '';
+                if ($withCompany) {
+                    $registryCommerce = $extAttributes->getRegistryCommerce();
+                    $bankName = $extAttributes->getBankName();
+                    $bankAccount = $extAttributes->getBankAccount();
+                }
+
                 $address->setWithCompany($withCompany);
-                $registryCommerce = $extAttributes->getRegistryCommerce();
                 $address->setRegistryCommerce($registryCommerce);
-                $bankName = $extAttributes->getBankName();
                 $address->setBankName($bankName);
-                $bankAccount = $extAttributes->getBankAccount();
                 $address->setBankAccount($bankAccount);
             } catch (\Exception $e) {
                 throw new CouldNotSaveException(

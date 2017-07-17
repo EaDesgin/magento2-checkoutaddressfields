@@ -61,7 +61,7 @@ class QuoteSubmitBefore implements ObserverInterface
 
             $order->setData(
                 ShippingLayoutProcessor::DELIVERY_DATE,
-                $quote->getShippingAddress()->getData(ShippingLayoutProcessor::DELIVERY_DATE)
+                $quote->getData(ShippingLayoutProcessor::DELIVERY_DATE)
             );
             $order->setData(
                 OrderFields::COMMENT_FIELD_NAME,

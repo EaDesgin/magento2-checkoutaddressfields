@@ -13,7 +13,7 @@ See LICENSE for license details.
             </field>
             <field name="registry_commerce">
                 <aspect name="to_order_address" />
-                <aspect name="delivery_date" />
+                <aspect name="to_customer_address" />
             </field>
             <field name="bank_name">
                 <aspect name="to_order_address" />

@@ -41,8 +41,6 @@ define(
                 }
 
                 var result = true;
-                console.log(urlFormatter.build(url))
-
 
                 $.ajax({
                     url: urlFormatter.build(url),
