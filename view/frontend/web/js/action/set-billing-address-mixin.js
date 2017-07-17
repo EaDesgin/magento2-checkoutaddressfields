@@ -16,6 +16,7 @@ define([
                     billingAddress['extension_attributes'] = {};
                 }
 
+                console.log(billingAddress.customAttributes);
                 if (billingAddress.customAttributes != undefined) {
                     $.each(billingAddress.customAttributes, function (key, value) {
 

@@ -15,7 +15,7 @@ use Eadesigndev\Checkoutaddressfields\Api\Data\OrderFieldsInterface;
 interface OrderFieldsManagementInterface
 {
     /**
-     * @param $cartId
+     * @param string $cartId
      * @param OrderFieldsInterface $orderComment
      * @return mixed
      */

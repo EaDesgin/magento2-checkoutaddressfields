@@ -48,6 +48,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         $result = $this->filedWithBank($result, 'bank_name');
         $result = $this->filedWithBankAccount($result, 'bank_account');
         $result = $this->fieldDeliveryDate($result, 'delivery_date');
+        $result = $this->fieldRegionId($result, 'region_id');
 
         return $result;
     }
@@ -62,12 +63,12 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $withCompany = [
-            'component' => 'Magento_Ui/js/form/element/abstract',
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/company-select',
             'config' => [
                 'customScope' => 'shippingAddress.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
-                'elementTmpl' => 'ui/form/element/checkbox-set',
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/checkbox-set',
                 'tooltip' => [
                     'description' => 'Company',
                 ],
@@ -81,17 +82,18 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
             ],
             'options' => [
                 [
-                    'value' => '0',
+                    'value' => 0,
                     'label' => 'Person',
                 ],
                 [
-                    'value' => '1',
+                    'value' => 1,
                     'label' => 'Business',
                 ]
             ],
             'filterBy' => null,
             'customEntry' => null,
             'visible' => true,
+            'value' => 0,
             'id' => $fieldName
         ];
 
@@ -113,7 +115,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     }
 
     /**
-     * Select company or person
+     * Registry of commerce
      * @param $result
      * @param $fieldName
      * @return mixed
@@ -122,12 +124,12 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $withCompany = [
-            'component' => 'Magento_Ui/js/form/element/abstract',
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input',
             'config' => [
                 'customScope' => 'shippingAddress.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
-                'elementTmpl' => 'ui/form/element/input'
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input'
             ],
             'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
             'label' => __('Registry of commerce'),
@@ -137,6 +139,7 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
             'filterBy' => null,
             'customEntry' => null,
             'visible' => true,
+            'class' => 'company-related',
             'id' => $fieldName
         ];
 
@@ -167,12 +170,12 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $withCompany = [
-            'component' => 'Magento_Ui/js/form/element/abstract',
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input',
             'config' => [
                 'customScope' => 'shippingAddress.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
-                'elementTmpl' => 'ui/form/element/input'
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input'
             ],
             'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
             'label' => __('Bank'),
@@ -212,12 +215,12 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
     {
 
         $withCompany = [
-            'component' => 'Magento_Ui/js/form/element/abstract',
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input',
             'config' => [
                 'customScope' => 'shippingAddress.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
-                'elementTmpl' => 'ui/form/element/input'
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input'
             ],
             'dataScope' => 'shippingAddress.custom_attributes.' . $fieldName,
             'label' => __('Bank Account'),
@@ -271,8 +274,46 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
             'validation' => [
                 'required-entry' => true
             ],
-            'sortOrder' => 5,
+            'sortOrder' => 0,
             'id' => $fieldName
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['shipping-step']
+        ['children']
+        ['shippingAddress']
+        ['children']
+        ['shipping-address-fieldset']
+        ['children']
+        [$fieldName] = $deliveryDate;
+
+        return $result;
+    }
+
+    /**
+     * Adding delivery date to the checkout
+     * @param $result
+     * @param $fieldName
+     * @return mixed
+     */
+    public function fieldRegionId($result, $fieldName)
+    {
+        $deliveryDate = [
+            'component' => 'Magento_Ui/js/form/element/region',
+            'config' => [
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/region_id',
+                'template' => 'ui/form/field',
+                'customEntry' => 'shippingAddress.region',
+            ],
+            'filterBy'=>[
+                'target'=> '${ $.provider }:${ $.parentScope }.country_id',
+                'field' => 'country_id'
+            ],
         ];
 
         $result

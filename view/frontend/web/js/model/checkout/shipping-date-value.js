@@ -17,11 +17,8 @@ define(
              *
              * @returns {Boolean}
              */
-            validate: function () {
+            orderDate: function () {
                 var isCustomer = customer.isLoggedIn();
-                var form = $('.payment-method input[name="payment[method]"]:checked')
-                    .parents('.payment-method')
-                    .find('form.order-comment-form');
 
                 var quoteId = quote.getQuoteId();
                 var url;
@@ -35,11 +32,11 @@ define(
                 var payload = {
                     cartId: quoteId,
                     orderComment: {
-                        comment: form.find('.input-text.order-comment').val()
+                        date: $('input[name="delivery_date"]').val(),
                     }
                 };
 
-                if (!payload.orderComment.comment) {
+                if (!payload.orderComment.date) {
                     return true;
                 }
 

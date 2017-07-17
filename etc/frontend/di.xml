@@ -9,8 +9,11 @@ See LICENSE for license details.
         <arguments>
             <argument name="layoutProcessors" xsi:type="array">
                 <item name="eadesigndev_shipping_address_fields" xsi:type="object">Eadesigndev\Checkoutaddressfields\Block\Checkout\Address\Fields\ShippingLayoutProcessor</item>
-                <!--<item name="eadesigndev_billing_address_fields" xsi:type="object">Eadesigndev\Checkoutaddressfields\Block\Checkout\Address\Fields\BillingLayoutProcessor</item>-->
             </argument>
         </arguments>
+    </type>
+
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="eadesigndev_billing_address_fields" type="Eadesigndev\Checkoutaddressfields\Plugin\Checkout\BillingLayoutProcessor" sortOrder="1000"/>
     </type>
 </config>

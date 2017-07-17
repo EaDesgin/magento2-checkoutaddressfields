@@ -11,6 +11,10 @@ use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Customer\Setup\CustomerSetupFactory;
+use Magento\Quote\Setup\QuoteSetup;
+use Magento\Quote\Setup\QuoteSetupFactory;
+use Magento\Sales\Setup\SalesSetup;
+use Magento\Sales\Setup\SalesSetupFactory;
 
 /**
  * Class InstallData
@@ -18,18 +22,35 @@ use Magento\Customer\Setup\CustomerSetupFactory;
  */
 class InstallData implements InstallDataInterface
 {
-
+    /**
+     * @var CustomerSetupFactory
+     */
     private $customerSetupFactory;
 
     /**
-     * Constructor
-     *
+     * @var SalesSetupFactory
+     */
+    private $salesSetupFactory;
+
+    /**
+     * @var QuoteSetupFactory
+     */
+    private $quoteSetupFactory;
+
+    /**
+     * InstallData constructor.
      * @param CustomerSetupFactory $customerSetupFactory
+     * @param SalesSetupFactory $salesSetupFactory
+     * @param QuoteSetupFactory $quoteSetupFactory
      */
     public function __construct(
-        CustomerSetupFactory $customerSetupFactory
+        CustomerSetupFactory $customerSetupFactory,
+        SalesSetupFactory $salesSetupFactory,
+        QuoteSetupFactory $quoteSetupFactory
     ) {
         $this->customerSetupFactory = $customerSetupFactory;
+        $this->salesSetupFactory = $salesSetupFactory;
+        $this->quoteSetupFactory = $quoteSetupFactory;
     }
 
     /**
@@ -48,7 +69,7 @@ class InstallData implements InstallDataInterface
             'type' => 'varchar',
             'source' => '',
             'required' => true,
-            'position' => 333,
+            'position' => 0,
             'visible' => true,
             'system' => false,
             'is_used_in_grid' => true,
@@ -63,8 +84,8 @@ class InstallData implements InstallDataInterface
             'input' => 'text',
             'type' => 'varchar',
             'source' => '',
-            'required' => true,
-            'position' => 333,
+            'required' => false,
+            'position' => 1,
             'visible' => true,
             'system' => false,
             'is_used_in_grid' => true,
@@ -79,8 +100,8 @@ class InstallData implements InstallDataInterface
             'input' => 'text',
             'type' => 'varchar',
             'source' => '',
-            'required' => true,
-            'position' => 333,
+            'required' => false,
+            'position' => 2,
             'visible' => true,
             'system' => false,
             'is_used_in_grid' => true,
@@ -95,8 +116,8 @@ class InstallData implements InstallDataInterface
             'input' => 'text',
             'type' => 'varchar',
             'source' => '',
-            'required' => true,
-            'position' => 333,
+            'required' => false,
+            'position' => 3,
             'visible' => true,
             'system' => false,
             'is_used_in_grid' => true,
@@ -181,24 +202,6 @@ class InstallData implements InstallDataInterface
                 'length' => 255
             ]
         );
-        $installer->getConnection()->addColumn(
-            $installer->getTable('quote_address'),
-            'delivery_date',
-            [
-                'comment' => 'Date of delivery',
-                'type' =>  Table::TYPE_TEXT,
-                'length' => 255
-            ]
-        );
-        $installer->getConnection()->addColumn(
-            $installer->getTable('quote_address'),
-            'order_comment',
-            [
-                'comment' => 'Order comment',
-                'type' =>  Table::TYPE_TEXT,
-                'length' => '64k'
-            ]
-        );
 
         $installer->getConnection()->addColumn(
             $installer->getTable('sales_order_address'),
@@ -236,23 +239,37 @@ class InstallData implements InstallDataInterface
                 'length' => 255
             ]
         );
-        $installer->getConnection()->addColumn(
-            $installer->getTable('sales_order_address'),
-            'delivery_date',
-            [
-                'comment' => 'Date of delivery',
-                'type' =>  Table::TYPE_TEXT,
-                'length' => 255
-            ]
+
+        /** @var QuoteSetup $quoteInstaller */
+        $quoteInstaller = $this->quoteSetupFactory->create(
+            ['resourceName' => 'quote_setup', 'setup' => $setup]
         );
-        $installer->getConnection()->addColumn(
-            $installer->getTable('sales_order_address'),
+
+        /** @var SalesSetup $salesInstaller */
+        $salesInstaller = $this->salesSetupFactory->create(
+            ['resourceName' => 'sales_setup', 'setup' => $setup]
+        );
+
+        $quoteInstaller->addAttribute(
+            'quote',
             'order_comment',
-            [
-                'comment' => 'Order comment',
-                'type' =>  Table::TYPE_TEXT,
-                'length' => '64k'
-            ]
+            ['type' => Table::TYPE_TEXT, 'length' => '64k', 'nullable' => true]
+        );
+        $quoteInstaller->addAttribute(
+            'quote',
+            'delivery_date',
+            ['type' => Table::TYPE_DATETIME, 'length' => null, 'nullable' => true]
+        );
+
+        $salesInstaller->addAttribute(
+            'order',
+            'order_comment',
+            ['type' => Table::TYPE_TEXT, 'length' => '64k', 'nullable' => true, 'grid' => true]
+        );
+        $salesInstaller->addAttribute(
+            'order',
+            'delivery_date',
+            ['type' => Table::TYPE_DATETIME, 'length' => null, 'nullable' => true, 'grid' => true]
         );
     }
 }
