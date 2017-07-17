@@ -10,7 +10,8 @@ define([
         return wrapper.wrap(setShippingInformationAction, function (originalAction, messageContainer) {
 
             var shippingAddress = quote.shippingAddress(),
-                cityField = $('input[name="city"]');
+                cityField = $('input[name="city"]'),
+                withCompany = 1;
 
             /**
              * Specific requirement for the current project
@@ -28,7 +29,7 @@ define([
                 shippingAddress['extension_attributes'] = {};
             }
 
-            console.log(shippingAddress.customAttributes);
+            withCompany = shippingAddress.customAttributes.with_company;
 
             if (shippingAddress.customAttributes !== undefined) {
                 $.each(shippingAddress.customAttributes, function (key, value) {
@@ -37,14 +38,14 @@ define([
                         value = value['value'];
                     }
 
-                    shippingAddress['customAttributes'][key] = value;
-                    shippingAddress['extension_attributes'][key] = value;
-
-                    if (key === 'with_company' && value == '0') {
+                    if (withCompany == '0') {
                         shippingAddress['customAttributes'][key] = '';
                         shippingAddress['extension_attributes'][key] = '';
                         shippingAddress['customAttributes']['with_company'] = 0;
                         shippingAddress['extension_attributes']['with_company'] = 0;
+                    } else {
+                        shippingAddress['customAttributes'][key] = value;
+                        shippingAddress['extension_attributes'][key] = value;
                     }
 
                 });
