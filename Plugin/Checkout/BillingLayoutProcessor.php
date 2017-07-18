@@ -23,7 +23,8 @@ class BillingLayoutProcessor
     public function afterProcess(
         LayoutProcessor $subject,
         array $result
-    ) {
+    )
+    {
 
         $paymentForms = $result['components']['checkout']['children']['steps']['children']
         ['billing-step']['children']['payment']['children']
@@ -46,6 +47,8 @@ class BillingLayoutProcessor
             );
             $result = $this->filedWithBank($result, 'bank_name', $paymentMethodForm, $paymentMethodCode);
             $result = $this->filedWithBankAccount($result, 'bank_account', $paymentMethodForm, $paymentMethodCode);
+            $result = $this->filedCompany($result, 'company', $paymentMethodForm, $paymentMethodCode);
+            $result = $this->filedVat($result, 'vat_id', $paymentMethodForm, $paymentMethodCode);
         }
 
         return $result;
@@ -65,10 +68,10 @@ class BillingLayoutProcessor
         $field = [
             'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/company-select',
             'config' => [
-                'customScope' => 'billingAddress'.$paymentMethodCode.'.custom_attributes',
+                'customScope' => 'billingAddress' . $paymentMethodCode . '.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
-                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/checkbox-set',
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/checkbox-set-billing',
                 'tooltip' => [
                     'description' => 'Company',
                 ],
@@ -113,7 +116,7 @@ class BillingLayoutProcessor
         ['children']
         ['form-fields']
         ['children']
-        [$fieldName]= $field;
+        [$fieldName] = $field;
 
         return $result;
     }
@@ -130,12 +133,12 @@ class BillingLayoutProcessor
     {
 
         $field = [
-            'component' => 'Magento_Ui/js/form/element/abstract',
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input-billing',
             'config' => [
-                'customScope' => 'billingAddress'.$paymentMethodCode.'.custom_attributes',
+                'customScope' => 'billingAddress' . $paymentMethodCode . '.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
-                'elementTmpl' => 'ui/form/element/input'
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input'
             ],
             'dataScope' => 'billingAddress' . $paymentMethodCode . '.custom_attributes.' . $fieldName,
             'label' => __('Registry of commerce'),
@@ -145,7 +148,6 @@ class BillingLayoutProcessor
             'filterBy' => null,
             'customEntry' => null,
             'visible' => true,
-            'class' => 'company-related',
             'id' => $fieldName
         ];
 
@@ -165,7 +167,7 @@ class BillingLayoutProcessor
         ['children']
         ['form-fields']
         ['children']
-        [$fieldName]= $field;
+        [$fieldName] = $field;
 
         return $result;
     }
@@ -182,9 +184,9 @@ class BillingLayoutProcessor
     {
 
         $field = [
-            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input',
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input-billing',
             'config' => [
-                'customScope' => 'billingAddress'.$paymentMethodCode.'.custom_attributes',
+                'customScope' => 'billingAddress' . $paymentMethodCode . '.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
                 'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input'
@@ -192,7 +194,7 @@ class BillingLayoutProcessor
             'dataScope' => 'billingAddress' . $paymentMethodCode . '.custom_attributes.' . $fieldName,
             'label' => __('Bank'),
             'provider' => 'checkoutProvider',
-            'sortOrder' => 5,
+            'sortOrder' => 4,
             'validation' => [],
             'filterBy' => null,
             'customEntry' => null,
@@ -216,7 +218,7 @@ class BillingLayoutProcessor
         ['children']
         ['form-fields']
         ['children']
-        [$fieldName]= $field;
+        [$fieldName] = $field;
 
         return $result;
     }
@@ -233,9 +235,9 @@ class BillingLayoutProcessor
     {
 
         $field = [
-            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input',
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input-billing',
             'config' => [
-                'customScope' =>'billingAddress'.$paymentMethodCode.'.custom_attributes',
+                'customScope' => 'billingAddress' . $paymentMethodCode . '.custom_attributes',
                 'customEntry' => null,
                 'template' => 'ui/form/field',
                 'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input'
@@ -243,12 +245,12 @@ class BillingLayoutProcessor
             'dataScope' => 'billingAddress' . $paymentMethodCode . '.custom_attributes.' . $fieldName,
             'label' => __('Bank Account'),
             'provider' => 'checkoutProvider',
-            'sortOrder' => 6,
+            'sortOrder' => 3,
             'validation' => [],
             'filterBy' => null,
             'customEntry' => null,
             'visible' => true,
-            'id'=>$fieldName
+            'id' => $fieldName
         ];
 
         $result
@@ -267,7 +269,113 @@ class BillingLayoutProcessor
         ['children']
         ['form-fields']
         ['children']
-        [$fieldName]= $field;
+        [$fieldName] = $field;
+
+        return $result;
+    }
+
+    /**
+     * Select company or person
+     * @param $result
+     * @param $fieldName
+     * @param $paymentMethodForm
+     * @param $paymentMethodCode
+     * @return array
+     */
+    public function filedCompany($result, $fieldName, $paymentMethodForm, $paymentMethodCode)
+    {
+
+        $field = [
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input-billing',
+            'config' => [
+                'customScope' => 'billingAddress' . $paymentMethodCode,
+                'customEntry' => null,
+                'template' => 'ui/form/field',
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input',
+                'tooltip' => null,
+            ],
+            'dataScope' => 'billingAddress' . $paymentMethodCode . $fieldName,
+            'dataScopePrefix' => 'billingAddress' . $paymentMethodCode,
+            'label' => __('Company'),
+            'provider' => 'checkoutProvider',
+            'sortOrder' => 1,
+            'validation' => [],
+            'options' => [],
+            'filterBy' => null,
+            'customEntry' => null,
+            'visible' => true,
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['billing-step']
+        ['children']
+        ['payment']
+        ['children']
+        ['payments-list']
+        ['children']
+        [$paymentMethodForm]
+        ['children']
+        ['form-fields']
+        ['children']
+        [$fieldName] = $field;
+
+        return $result;
+    }
+
+    /**
+     * Select company or person
+     * @param $result
+     * @param $fieldName
+     * @param $paymentMethodForm
+     * @param $paymentMethodCode
+     * @return array
+     */
+    public function filedVat($result, $fieldName, $paymentMethodForm, $paymentMethodCode)
+    {
+
+        $field = [
+            'component' => 'Eadesigndev_Checkoutaddressfields/js/form/element/initial-hidden-input-billing',
+            'config' => [
+                'customScope' => 'billingAddress' . $paymentMethodCode,
+                'customEntry' => null,
+                'template' => 'ui/form/field',
+                'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/initial-hidden-input',
+                'tooltip' => null,
+            ],
+            'dataScope' => 'billingAddress' . $paymentMethodCode . $fieldName,
+            'dataScopePrefix' => 'billingAddress' . $paymentMethodCode,
+            'label' => __('VAT number'),
+            'provider' => 'checkoutProvider',
+            'sortOrder' => 1,
+            'validation' => [],
+            'options' => [],
+            'filterBy' => null,
+            'customEntry' => null,
+            'visible' => true,
+        ];
+
+        $result
+        ['components']
+        ['checkout']
+        ['children']
+        ['steps']
+        ['children']
+        ['billing-step']
+        ['children']
+        ['payment']
+        ['children']
+        ['payments-list']
+        ['children']
+        [$paymentMethodForm]
+        ['children']
+        ['form-fields']
+        ['children']
+        [$fieldName] = $field;
 
         return $result;
     }
