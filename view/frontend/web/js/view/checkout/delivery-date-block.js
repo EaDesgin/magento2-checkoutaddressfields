@@ -24,7 +24,7 @@ define(
                 ko.bindingHandlers.datepicker = {
                     init: function (element, valueAccessor, allBindingsAccessor) {
                         var $el = $(element);
-                        
+
                         var options = {minDate: 1};
                         $el.datepicker(options);
 
