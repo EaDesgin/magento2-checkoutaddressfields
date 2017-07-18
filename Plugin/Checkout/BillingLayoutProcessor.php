@@ -47,8 +47,8 @@ class BillingLayoutProcessor
             );
             $result = $this->filedWithBank($result, 'bank_name', $paymentMethodForm, $paymentMethodCode);
             $result = $this->filedWithBankAccount($result, 'bank_account', $paymentMethodForm, $paymentMethodCode);
-            $result = $this->filedCompany($result, 'company', $paymentMethodForm, $paymentMethodCode);
-            $result = $this->filedVat($result, 'vat_id', $paymentMethodForm, $paymentMethodCode);
+//            $result = $this->filedCompany($result, 'company', $paymentMethodForm, $paymentMethodCode);
+//            $result = $this->filedVat($result, 'vat_id', $paymentMethodForm, $paymentMethodCode);
         }
 
         return $result;
