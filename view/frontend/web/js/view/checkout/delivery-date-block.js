@@ -1,7 +1,8 @@
-<!--
-Copyright © 2017 EaDesign by Eco Active S.R.L. All rights reserved.
-See LICENSE for license details.
--->
+/**
+ * Copyright © 2017 EaDesign by Eco Active S.R.L. All rights reserved.
+ * See LICENSE for license details.
+ */
+
 define(
     [
         'jquery',
@@ -23,7 +24,7 @@ define(
                 ko.bindingHandlers.datepicker = {
                     init: function (element, valueAccessor, allBindingsAccessor) {
                         var $el = $(element);
-
+                        
                         var options = {minDate: 1};
                         $el.datepicker(options);
 
