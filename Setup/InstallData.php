@@ -68,7 +68,7 @@ class InstallData implements InstallDataInterface
             'input' => 'text',
             'type' => 'varchar',
             'source' => '',
-            'required' => true,
+            'required' => false,
             'position' => 0,
             'visible' => true,
             'system' => false,

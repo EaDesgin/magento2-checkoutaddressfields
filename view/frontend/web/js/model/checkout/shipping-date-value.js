@@ -18,10 +18,11 @@ define(
              * @returns {Boolean}
              */
             orderDate: function () {
-                var isCustomer = customer.isLoggedIn();
-
-                var quoteId = quote.getQuoteId();
-                var url;
+                var isCustomer = customer.isLoggedIn(),
+                    quoteId = quote.getQuoteId(),
+                    url,
+                    payload,
+                    result = true;
 
                 if (isCustomer) {
                     url = urlBuilder.createUrl('/carts/mine/set-order-comment', {})
@@ -29,7 +30,7 @@ define(
                     url = urlBuilder.createUrl('/guest-carts/:cartId/set-order-comment', {cartId: quoteId});
                 }
 
-                var payload = {
+                payload = {
                     cartId: quoteId,
                     orderComment: {
                         date: $('input[name="delivery_date"]').val(),
@@ -37,10 +38,8 @@ define(
                 };
 
                 if (!payload.orderComment.date) {
-                    return true;
+                    return result;
                 }
-
-                var result = true;
 
                 $.ajax({
                     url: urlFormatter.build(url),

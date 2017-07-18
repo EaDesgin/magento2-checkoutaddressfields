@@ -47,7 +47,6 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         $result = $this->filedWithRegistryCommerce($result, 'registry_commerce');
         $result = $this->filedWithBank($result, 'bank_name');
         $result = $this->filedWithBankAccount($result, 'bank_account');
-        $result = $this->fieldDeliveryDate($result, 'delivery_date');
         $result = $this->fieldRegionId($result, 'region_id');
 
         return $result;
@@ -246,51 +245,6 @@ class ShippingLayoutProcessor implements LayoutProcessorInterface
         ['shipping-address-fieldset']
         ['children']
         ['replacement_' . $fieldName] = $withCompany;
-
-        return $result;
-    }
-
-    /**
-     * Adding delivery date to the checkout
-     * @param $result
-     * @param $fieldName
-     * @return mixed
-     */
-    public function fieldDeliveryDate($result, $fieldName)
-    {
-        $deliveryDate = [
-            'component' => 'Magento_Ui/js/form/element/abstract',
-            'config' => [
-                'customScope' => 'shippingAddress',
-                'template' => 'ui/form/field',
-                'elementTmpl' => 'ui/form/element/date',
-                'options' => [],
-                'id' => $fieldName
-            ],
-            'dataScope' => 'shippingAddress.' . $fieldName,
-            'label' => 'Delivery Date',
-            'provider' => 'checkoutProvider',
-            'visible' => true,
-            'validation' => [
-                'required-entry' => true
-            ],
-            'sortOrder' => 0,
-            'id' => $fieldName
-        ];
-
-        $result
-        ['components']
-        ['checkout']
-        ['children']
-        ['steps']
-        ['children']
-        ['shipping-step']
-        ['children']
-        ['shippingAddress']
-        ['children']
-        ['shipping-address-fieldset']
-        ['children']
-        [$fieldName] = $deliveryDate;
 
         return $result;
     }

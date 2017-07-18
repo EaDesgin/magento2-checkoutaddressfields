@@ -1,0 +1,21 @@
+<!--
+Copyright © 2017 EaDesign by Eco Active S.R.L. All rights reserved.
+See LICENSE for license details.
+-->
+
+<fieldset id="customer-shipment-fieldset" class="fieldset">
+    <div class="field required">
+        <label class="label" for="delivery_date">
+            <span data-bind="i18n: 'Delivery date'"></span>
+        </label>
+        <div class="control">
+            <input id="delivery_date"
+                   aria-required="true"
+                   data-validate="{required:true}"
+                   type="text"
+                   class="input-text required-entry"
+                   data-bind="datepicker: true"
+                   name="delivery_date"/>
+        </div>
+    </div>
+</fieldset>

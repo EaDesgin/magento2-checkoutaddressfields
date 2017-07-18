@@ -11,8 +11,25 @@
                                     <item name="children" xsi:type="array">
                                         <item name="shipping-step" xsi:type="array">
                                             <item name="children" xsi:type="array">
+                                                <item name="step-config" xsi:type="array">
+                                                    <item name="component" xsi:type="string">uiComponent</item>
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shipping-rates-validation" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                               <!-- validations rules-->
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
                                                 <item name="shippingAddress" xsi:type="array">
                                                     <item name="children" xsi:type="array">
+                                                        <item name="before-shipping-method-form" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="delivery_date" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">Eadesigndev_Checkoutaddressfields/js/view/checkout/delivery-date-block</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
                                                         <item name="shipping-address-fieldset" xsi:type="array">
                                                             <item name="children" xsi:type="array">
                                                                 <item name="with_company" xsi:type="array">
