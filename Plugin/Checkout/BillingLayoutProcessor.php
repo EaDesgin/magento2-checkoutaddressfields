@@ -23,8 +23,7 @@ class BillingLayoutProcessor
     public function afterProcess(
         LayoutProcessor $subject,
         array $result
-    )
-    {
+    ) {
 
         $paymentForms = $result['components']['checkout']['children']['steps']['children']
         ['billing-step']['children']['payment']['children']
@@ -47,8 +46,6 @@ class BillingLayoutProcessor
             );
             $result = $this->filedWithBank($result, 'bank_name', $paymentMethodForm, $paymentMethodCode);
             $result = $this->filedWithBankAccount($result, 'bank_account', $paymentMethodForm, $paymentMethodCode);
-//            $result = $this->filedCompany($result, 'company', $paymentMethodForm, $paymentMethodCode);
-//            $result = $this->filedVat($result, 'vat_id', $paymentMethodForm, $paymentMethodCode);
         }
 
         return $result;
@@ -73,7 +70,7 @@ class BillingLayoutProcessor
                 'template' => 'ui/form/field',
                 'elementTmpl' => 'Eadesigndev_Checkoutaddressfields/form/element/checkbox-set-billing',
                 'tooltip' => [
-                    'description' => 'Company',
+                    'description' => __('Company'),
                 ],
             ],
             'dataScope' => 'billingAddress' . $paymentMethodCode . '.custom_attributes.' . $fieldName,
@@ -86,11 +83,11 @@ class BillingLayoutProcessor
             'options' => [
                 [
                     'value' => 0,
-                    'label' => 'Person',
+                    'label' => __('Person'),
                 ],
                 [
                     'value' => 1,
-                    'label' => 'Business',
+                    'label' => __('Business'),
                 ]
             ],
             'filterBy' => null,
