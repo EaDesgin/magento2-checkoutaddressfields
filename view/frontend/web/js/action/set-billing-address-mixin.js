@@ -17,9 +17,8 @@ define([
                     billingAddress['extension_attributes'] = {};
                 }
 
-                withCompany = billingAddress.customAttributes.with_company;
-
                 if (billingAddress.customAttributes != undefined) {
+                    withCompany = billingAddress.customAttributes.with_company;
                     $.each(billingAddress.customAttributes, function (key, value) {
 
                         if($.isPlainObject(value)){
