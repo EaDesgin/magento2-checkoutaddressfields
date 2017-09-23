@@ -23,6 +23,7 @@ define([
             var country = registry.get(this.parentName + '.' + 'country_id'),
                 city = registry.get(this.parentName + '.' + 'city'),
                 region = registry.get(this.parentName + '.' + 'region_id');
+
             if (country) {
                 city.disable();
                 country.disable();

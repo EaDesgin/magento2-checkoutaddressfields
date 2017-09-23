@@ -29,9 +29,10 @@ define([
                 shippingAddress['extension_attributes'] = {};
             }
 
-            withCompany = shippingAddress.customAttributes.with_company;
 
             if (shippingAddress.customAttributes !== undefined) {
+                withCompany = shippingAddress.customAttributes.with_company;
+
                 $.each(shippingAddress.customAttributes, function (key, value) {
 
                     if ($.isPlainObject(value)) {
