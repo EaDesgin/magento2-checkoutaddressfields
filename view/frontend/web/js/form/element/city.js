@@ -27,7 +27,7 @@ define([
             if (country) {
                 city.disable();
                 country.disable();
-                region.disable();
+                // region.disable();
             }
         }
 
